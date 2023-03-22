@@ -76,6 +76,7 @@ class MobileFaceNet(Module):
     def __init__(self):
         super(MobileFaceNet, self).__init__()
         self.conv1 = ConvBlock(3, 64, kernel=(3, 3), stride=(2, 2), padding=(1, 1))
+        # 组卷积当分组数正好等于通道数时，就成为了DW卷积
         self.conv2_dw = ConvBlock(64, 64, kernel=(3, 3), stride=(1, 1), padding=(1, 1), groups=64)
         self.conv_23 = DepthWise(64, 64, kernel=(3, 3), stride=(2, 2), padding=(1, 1), groups=128)
         self.conv_3 = Residual(64, num_block=4, groups=128, kernel=(3, 3), stride=(1, 1), padding=(1, 1))
